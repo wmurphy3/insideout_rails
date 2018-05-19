@@ -1,0 +1,33 @@
+<div class="row mt-5">
+  <div class="col-md-4 mx-auto">
+    <!-- TODO: Company Name -->
+    <div class="mx-auto" style="width: 200px;">
+      <h1 class="company_name"></h1>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-5">
+  <div class="col-md-4 mx-auto">
+    <%= form_for resource, :as => resource_name, :url => session_path(resource_name), :html => { :role => 'form'} do |f| %>
+      <%= devise_error_messages! %>
+      <div class="form-group">
+        <%= f.label :email %>
+        <%= f.email_field :email, :autofocus => true, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :password %>
+        <%= f.password_field :password, class: 'form-control' %>
+      </div>
+
+      <%= f.submit 'Log in', :class => 'btn btn-primary btn-block' %>
+    <% end %>
+  </div>
+</div>
+
+<footer class="mt-5 mb-5">
+  <div class="container-fluid text-center">
+      Copyright &copy; 20017-<%= Time.now.year %>, Wingmate. All rights reserved.
+  </div>
+</footer>

@@ -1,0 +1,38 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Admin?</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr class="<%= user.deleted? ? 'bg-danger' : '' %>">
+        <td><%= user.id %></td>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.is_admin? ? 'Yes' : 'No' %></td>
+        <td>
+          <% if user.deleted? %>
+            <span>
+              <%= link_to "<i class='fa fa-trash' aria-hidden='true'></i> Activate".html_safe, activate_user_path(user), class: 'btn btn-sm btn-outline-warning', data: {confirm: "Are you sure?"} %>
+            </span>
+          <% else %>
+            <span>
+              <%= link_to "<i class='fa fa-pencil' aria-hidden='true'></i> Edit".html_safe, edit_user_path(user), class: 'btn btn-sm btn-primary' %>
+            </span>
+            <span>
+              <%= link_to "<i class='fa fa-trash' aria-hidden='true'></i> Delete".html_safe, user_path(user), method: :delete, class: 'btn btn-sm btn-outline-danger', data: {confirm: "Are you sure?"} %>
+            </span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="apple_pagination mx-auto">
+  <%= paginate @users, :container => false %>
+</div>

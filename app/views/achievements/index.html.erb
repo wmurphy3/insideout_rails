@@ -1,0 +1,36 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Points</th>
+      <th colspan="2">
+        <span>
+          <%= link_to "<i class='fa fa-plus' aria-hidden='true'></i> Create".html_safe, new_achievement_path, class: 'btn btn-sm btn-success' %>
+        </span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @achievements.each do |achievement| %>
+      <tr>
+        <td><%= achievement.id %></td>
+        <td><%= achievement.name %></td>
+        <td><%= achievement.category.name %></td>
+        <td><%= achievement.points %></td>
+        <td>
+          <span>
+            <%= link_to "<i class='fa fa-pencil' aria-hidden='true'></i> Edit".html_safe, edit_achievement_path(achievement), class: 'btn btn-sm btn-primary' %>
+          </span>
+          <span>
+            <%= link_to "<i class='fa fa-trash' aria-hidden='true'></i> Delete".html_safe, achievement_path(achievement), method: :delete, class: 'btn btn-sm btn-outline-danger', data: {confirm: "Are you sure?"} %>
+          </span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="apple_pagination mx-auto">
+  <%= paginate @achievements, :container => false %>
+</div>
