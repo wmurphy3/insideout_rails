@@ -36,16 +36,13 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resource :dashboard
-      resources :leagues do
+      resource :people
+      resources :matches do
         collection do
-          get :pending
+          post :create_decline
         end
       end
-      resource :categories
-      resources :achievements
-      resources :user_achievements
-      resource :profiles
+      resource :users
     end
   end
 

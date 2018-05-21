@@ -6,7 +6,11 @@ module CustomTokenResponse
 
     additional_data = {
       :id               => user.id,
-      :email            => user.email
+      :email            => user.email,
+      :description      => user.description,
+      :age              => user.age,
+      :name             => user.name,
+      :subscribed       => user.subscribed
     }
 
     # call original `#body` method and merge its result with the additional data hash
