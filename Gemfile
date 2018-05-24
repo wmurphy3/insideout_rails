@@ -73,3 +73,5 @@ gem 'rectify'
 gem "paranoia", "~> 2.2"
 
 gem 'kaminari'
+
+gem 'geocoder'

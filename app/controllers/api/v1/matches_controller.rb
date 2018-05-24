@@ -5,7 +5,6 @@ class Api::V1::MatchesController < Api::V1::ApplicationController
 
   def index
     @matches = Match.active.mine(current_user.id)
-
     render json: @matches, each_serializer: MatchSerializer, user_id: current_user.id
   end
 

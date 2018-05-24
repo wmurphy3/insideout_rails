@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   acts_as_paranoid
 
+  reverse_geocoded_by :latitude, :longitude
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
