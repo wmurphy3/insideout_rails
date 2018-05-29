@@ -1,10 +1,10 @@
 # TODO: END MATCH
 
 class Api::V1::MatchesController < Api::V1::ApplicationController
-  before_action :set_match, only: [:show, :update]
+  before_action :set_match, only: [:show, :update, :destroy]
 
   def index
-    @matches = Match.active.mine(current_user.id)
+    @matches = Match.mine(current_user.id)
     render json: @matches, each_serializer: MatchSerializer, user_id: current_user.id
   end
 
@@ -16,22 +16,6 @@ class Api::V1::MatchesController < Api::V1::ApplicationController
     @form = Match::Form.from_params(match_params)
 
     Match::Create.call(@form, current_user) do
-      on(:ok) do |match|
-        render({
-          :json       => {message:'matched'},
-          :status     => :created,
-        })
-      end
-      on(:invalid) do |errors|
-        render json: { errors: errors }, status: :unprocessable_entity
-      end
-    end
-  end
-
-  def create_decline
-    @form = DeclineMatch::Form.from_params(match_params)
-
-    DeclineMatch::Create.call(@form, current_user) do
       on(:ok) do |match|
         render({
           :json       => {message:'matched'},
@@ -56,6 +40,14 @@ class Api::V1::MatchesController < Api::V1::ApplicationController
       on(:invalid) do |errors|
         render json: { errors: errors }, status: :unprocessable_entity
       end
+    end
+  end
+
+  def destroy
+    if @match.destroy
+      render json: '', status: :no_content
+    else
+      render json: { errors: @match.errors }, status: :unprocessable_entity
     end
   end
 
