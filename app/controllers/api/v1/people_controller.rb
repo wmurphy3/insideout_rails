@@ -3,8 +3,16 @@ class Api::V1::PeopleController < Api::V1::ApplicationController
   before_action :save_spot
 
   def show
-    @people = User.subscribed.not_me(current_user.id).near([params[:latitude], params[:longitude]], 99999)
-    render json: @people, each_serializer: PersonSerializer
+    # TODO figure out a better algo
+    @people = User.subscribed
+                  .where.not(id: Match.mine(current_user.id).pluck(:accepter_id, :asker_id))
+                  .not_me(current_user.id)
+                  .near([params[:latitude], params[:longitude]], 99999)
+    @people = @people.where(gender: 'male', "allow_#{current_user.gender}".to_sym => true) if current_user.allow_male?
+    @people = @people.where(gender: 'female', "allow_#{current_user.gender}".to_sym => true) if current_user.allow_female?
+    @people = @people.where(gender: 'other', "allow_#{current_user.gender}".to_sym => true) if current_user.allow_other?
+
+    render json: @people, each_serializer: PersonSerializer, longitude: current_user.longitude, latitude: current_user.latitude
   end
 
   private

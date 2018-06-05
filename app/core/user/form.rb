@@ -1,6 +1,10 @@
-class UserProfile::Form < Rectify::Form
-  mimic :user_profile
+class User::Form < Rectify::Form
+  mimic :user
 
+  attribute :email,               String
+  attribute :name,                String
+  attribute :password,              String
+  attribute :password_confirmation, String
   attribute :description,         String
   attribute :favorite_food,       String
   attribute :favorite_song,       Integer
@@ -8,7 +12,7 @@ class UserProfile::Form < Rectify::Form
   attribute :job_title,           String
   attribute :best_accomplishment, String
   attribute :hobbies,             String
-  attribute :last_school,         String
+  attribute :school,              String
   attribute :social_media_link,   String
   attribute :snap_chat_name,      String
   attribute :profile_picture,     Object

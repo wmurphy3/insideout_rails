@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180528215052) do
+ActiveRecord::Schema.define(version: 20180531011713) do
 
   create_table "matches", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "asker_id"
@@ -110,6 +110,19 @@ ActiveRecord::Schema.define(version: 20180528215052) do
     t.text "description"
     t.float "latitude", limit: 24, default: 0.0
     t.float "longitude", limit: 24, default: 0.0
+    t.string "gender"
+    t.string "favorite_movie"
+    t.string "favorite_food"
+    t.string "favorite_song"
+    t.string "job_title"
+    t.string "hobbies"
+    t.string "school"
+    t.string "social_media_link"
+    t.string "snap_chat_name"
+    t.text "profile_picture"
+    t.boolean "allow_male", default: false
+    t.boolean "allow_female", default: false
+    t.boolean "allow_other", default: false
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

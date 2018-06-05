@@ -4,6 +4,7 @@ class Api::V1::Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /resource
   def create
+    puts "HERE!!!"
     build_resource(sign_up_params)
     resource.save
 

@@ -7,6 +7,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   has_one :user_profile
+  has_many :matches
 
   paginates_per 20
 

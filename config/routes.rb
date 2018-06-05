@@ -40,7 +40,7 @@ Rails.application.routes.draw do
           post :create_decline
         end
       end
-      resource :users
+      resources :users
       resources :messages
     end
   end

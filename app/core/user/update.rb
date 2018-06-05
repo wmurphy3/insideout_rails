@@ -1,7 +1,8 @@
-class UpdateProfile::Create < Rectify::Command
+class User::Update < Rectify::Command
 
-  def initialize(form, user)
+  def initialize(form, user_profile, user)
     @form = form
+    @user_profile = user_profile
     @user = user
   end
 
@@ -11,10 +12,12 @@ class UpdateProfile::Create < Rectify::Command
     transaction do
       upload_image
       transform_params
-      create_user_profile
+      update_user_profile
     end
 
     broadcast(:ok, user_profile)
+  rescue ActiveRecord::RecordInvalid => e
+    broadcast(:invalid, e.messages)
   end
 
   private
@@ -27,28 +30,27 @@ class UpdateProfile::Create < Rectify::Command
 
   def transform_params
     @transformed_params = {
-      user_id:              user.id,
+      email:                form.email,
+      name:                 form.name,
+      age:                  form.age,
       description:          form.description,
       favorite_movie:       form.favorite_movie,
       favorite_food:        form.favorite_food,
       favorite_song:        form.favorite_song,
       job_title:            form.job_title,
-      best_accomplishment:  form.best_accomplishment,
       hobbies:              form.hobbies,
-      last_school:          form.last_school,
+      school:               form.school,
       social_media_link:    form.social_media_link,
       snap_chat_name:       form.snap_chat_name,
       profile_picture:      nil,
       allow_male:           form.allow_male,
       allow_other:          form.allow_other,
       allow_female:         form.allow_female,
-      gender:               form.gender,
-      distance:             form.distance
+      gender:               form.gender
     }
   end
 
-  def create_user_profile
-    @user_profile = UserProfile.new(@transformed_params)
-    @user_profile.save
+  def update_user_profile
+    user_profile.update!(@transformed_params)
   end
 end
