@@ -34,10 +34,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resource :people
+      resources :people
       resources :matches do
         collection do
           post :create_decline
+          get :next_step
         end
       end
       resources :users
