@@ -15,7 +15,7 @@ class User::Form < Rectify::Form
   attribute :school,              String
   attribute :social_media_link,   String
   attribute :snap_chat_name,      String
-  attribute :profile_picture,     Object
+  attribute :image_data,          Object
   attribute :gender,              String
   attribute :age,                 Integer
   attribute :distance,            Integer

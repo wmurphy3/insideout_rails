@@ -9,7 +9,6 @@ class User::Create < Rectify::Command
     return broadcast(:invalid, form.errors.messages) if form.invalid?
 
     transaction do
-      upload_image
       transform_params
       create_user_profile
     end
@@ -24,10 +23,6 @@ class User::Create < Rectify::Command
   private
 
   attr_reader :form, :user, :user_profile
-
-  def upload_image
-    # TODO: Use shrine to upload image and then set image_data
-  end
 
   def transform_params
     @transformed_params = {
@@ -44,7 +39,7 @@ class User::Create < Rectify::Command
       school:               form.school,
       social_media_link:    form.social_media_link,
       snap_chat_name:       form.snap_chat_name,
-      profile_picture:      nil,
+      image_data:           nil,
       allow_male:           form.allow_male,
       allow_other:          form.allow_other,
       allow_female:         form.allow_female,
@@ -54,7 +49,6 @@ class User::Create < Rectify::Command
 
   def create_user_profile
     @user_profile = User.new(@transformed_params)
-
     @user_profile.save
   end
 end

@@ -41,9 +41,6 @@ class Api::V1::UsersController < Api::V1::ApplicationController
     end
   end
 
-  def update_location
-  end
-
   private
 
   def user_profile_params

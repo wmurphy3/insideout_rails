@@ -75,3 +75,7 @@ gem "paranoia", "~> 2.2"
 gem 'kaminari'
 
 gem 'geocoder'
+
+gem 'aws-sdk', '~> 2.1'
+gem 'shrine', '~> 2.6', '2.6.1'
+gem 'figaro'

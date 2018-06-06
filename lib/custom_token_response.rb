@@ -11,7 +11,6 @@ module CustomTokenResponse
       :age              => user.age,
       :name             => user.name,
       :subscribed       => user.subscribed,
-      :description      => user.description,
       :favorite_food    => user.favorite_food,
       :favorite_song    => user.favorite_song,
       :favorite_movie   => user.favorite_movie,

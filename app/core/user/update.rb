@@ -25,7 +25,7 @@ class User::Update < Rectify::Command
   attr_reader :form, :user, :user_profile
 
   def upload_image
-    # TODO: Use shrine to upload image and then set image_data
+    Thread.current[:current_user] = user
   end
 
   def transform_params
@@ -42,7 +42,7 @@ class User::Update < Rectify::Command
       school:               form.school,
       social_media_link:    form.social_media_link,
       snap_chat_name:       form.snap_chat_name,
-      profile_picture:      nil,
+      image_data:           form.image_data,
       allow_male:           form.allow_male,
       allow_other:          form.allow_other,
       allow_female:         form.allow_female,

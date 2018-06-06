@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180531011713) do
+ActiveRecord::Schema.define(version: 20180606214314) do
 
   create_table "matches", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "asker_id"
@@ -119,7 +119,7 @@ ActiveRecord::Schema.define(version: 20180531011713) do
     t.string "school"
     t.string "social_media_link"
     t.string "snap_chat_name"
-    t.text "profile_picture"
+    t.text "image_data"
     t.boolean "allow_male", default: false
     t.boolean "allow_female", default: false
     t.boolean "allow_other", default: false

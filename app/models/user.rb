@@ -1,8 +1,10 @@
+require "image_uploader"
+
 class User < ApplicationRecord
+  include ImageUploader::Attachment.new(:image)
+  
   acts_as_paranoid
-
   reverse_geocoded_by :latitude, :longitude
-
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
