@@ -35,13 +35,19 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :people
+      resources :mobile_tokens
       resources :matches do
         collection do
           post :create_decline
           get :next_step
         end
       end
-      resources :users
+      resources :users do
+        collection do
+          patch :save_image
+          post 'send_recovery_email'
+        end
+      end
       resources :messages
     end
   end

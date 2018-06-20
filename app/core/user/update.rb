@@ -10,7 +10,6 @@ class User::Update < Rectify::Command
     return broadcast(:invalid, form.errors.messages) if form.invalid?
 
     transaction do
-      upload_image
       transform_params
       update_user_profile
     end
@@ -23,10 +22,6 @@ class User::Update < Rectify::Command
   private
 
   attr_reader :form, :user, :user_profile
-
-  def upload_image
-    Thread.current[:current_user] = user
-  end
 
   def transform_params
     @transformed_params = {
@@ -42,7 +37,6 @@ class User::Update < Rectify::Command
       school:               form.school,
       social_media_link:    form.social_media_link,
       snap_chat_name:       form.snap_chat_name,
-      image_data:           form.image_data,
       allow_male:           form.allow_male,
       allow_other:          form.allow_other,
       allow_female:         form.allow_female,

@@ -29,11 +29,16 @@ class Api::V1::MatchesController < Api::V1::ApplicationController
   end
 
   def next_step
-    @match.accepter_next_step = true if @match.accepter_id == current_user.id
-    @match.asker_next_step = true if @match.asker_id == current_user.id
+    @match.set_user current_user
 
     if @match.save
-      render({ :json => {message:'matched'}, :status => :created })
+      @match.send_next_step_accepted(current_user) if @match.both_accepted?
+      render({
+        json: @match.isnt_me(current_user),
+        serializer: PersonSerializer,
+        longitude: current_user.longitude,
+        latitude: current_user.latitude
+      })
     else
       render json: { errors: @match.errors.messages }, status: :unprocessable_entity
     end

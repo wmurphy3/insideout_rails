@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180606214314) do
+ActiveRecord::Schema.define(version: 20180617014532) do
 
   create_table "matches", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "asker_id"
@@ -27,6 +27,14 @@ ActiveRecord::Schema.define(version: 20180606214314) do
     t.integer "user_id"
     t.integer "match_id", null: false
     t.text "message", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "mobile_tokens", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "user_id"
+    t.string "token"
+    t.string "device_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -123,6 +131,7 @@ ActiveRecord::Schema.define(version: 20180606214314) do
     t.boolean "allow_male", default: false
     t.boolean "allow_female", default: false
     t.boolean "allow_other", default: false
+    t.boolean "is_admin"
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

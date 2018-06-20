@@ -1,6 +1,6 @@
 class Api::V1::ApplicationController < ActionController::API
   before_action :configure_permitted_parameters, if: :devise_controller?
-
+  before_action :pagination_params
   # Doorkeeper code
   before_action :doorkeeper_authorize!
   respond_to :json
@@ -15,6 +15,11 @@ class Api::V1::ApplicationController < ActionController::API
     :snap_chat_name, :allow_male, :allow_female, :allow_other]
     devise_parameter_sanitizer.permit :sign_up, keys: added_attrs
     devise_parameter_sanitizer.permit :account_update, keys: added_attrs
+  end
+
+  def pagination_params
+    @size = params[:page_size]   || 20
+    @page = params[:page_number] || 1
   end
 
   private

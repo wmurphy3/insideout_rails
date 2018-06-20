@@ -12,7 +12,7 @@ class ImageUploader < Shrine
     return unless ImageUploader.current_user
 
     extension = File.extname(extract_filename(io).to_s)
-    "#{ImageUploader.current_user.client_id}/#{Time.now.strftime('%Y%m%d%H%M%S')}#{extension}"
+    "#{ImageUploader.current_user.id}#{Time.now.strftime('%Y%m%d%H%M%S')}#{extension}"
   end
 
   class << self

@@ -7,9 +7,11 @@ class Message::Create < Rectify::Command
 
   def call
     transaction do
+      find_receiver
       find_or_create_match
       transform_params
       create_message
+      send_push_notification
     end
 
     broadcast(:ok, message)
@@ -19,11 +21,16 @@ class Message::Create < Rectify::Command
 
   private
 
-  attr_reader :params, :user, :message, :match
+  attr_reader :params, :user, :message, :match, :token
+
+  def find_receiver
+    @token = MobileToken.where(user_id: params[:user_id]).pluck(:token)
+  end
 
   def find_or_create_match
     unless params[:match_id]
       @match = Match.create(asker_id: user.id, accepter_id: params[:user_id])
+      SendPushNotificationJob.perform_later(token, "You have recieved your first message from #{user.name}") unless token.empty?
     end
   end
 
@@ -38,5 +45,9 @@ class Message::Create < Rectify::Command
   def create_message
     @message = Message.new(@transformed_params)
     @message.save
+  end
+
+  def send_push_notification
+    SendPushNotificationJob.perform_later(token, "A message from #{user.name} is waiting for you") unless token.empty?
   end
 end

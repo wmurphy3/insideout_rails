@@ -1,0 +1,34 @@
+
+<%= custom_bootstrap_flash %>
+
+<div class="row mt-5">
+  <div class="col-md-4 mx-auto">
+    <div class="mx-auto">
+      <h2>Change your password</h2>
+    </div>
+  </div>
+</div>
+<div class="row mt-5">
+  <div class="col-md-4 mx-auto">
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+      <%= f.hidden_field :reset_password_token %>
+      <input type="hidden" name="redirect_uri" value="<%= @redirect_uri %>">
+      <div class="form-group">
+        <%= f.label :password, "New password" %>
+        <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %><br />
+        <%= f.password_field :password, autofocus: true, autocomplete: "off",class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :password_confirmation, "Confirm new password" %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "off",class: 'form-control' %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Change my passwords", :class => 'btn btn-primary btn-block' %>
+      </div>
+    <% end %>
+  </div>
+</div>

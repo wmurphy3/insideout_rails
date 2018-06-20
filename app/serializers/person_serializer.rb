@@ -10,7 +10,11 @@ class PersonSerializer < ActiveModel::Serializer
   end
 
   def gender
-    object.gender.first 
+    object.gender.first
+  end
+
+  def profile_picture
+    object.image_url
   end
 
 end

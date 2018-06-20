@@ -1,18 +1,17 @@
 class Api::V1::PeopleController < Api::V1::ApplicationController
-  # TODO move to a job
   before_action :save_spot, only: [:index]
 
   def index
-    # TODO figure out a better algo
     @people = User.subscribed
                   .where.not(id: Match.mine(current_user.id).pluck(:accepter_id, :asker_id))
                   .not_me(current_user.id)
-                  .near([params[:latitude], params[:longitude]], 99999)
+                  .near([current_user.latitude, current_user.longitude], 99999)
     @people = @people.where(gender: 'male', "allow_#{current_user.gender}".to_sym => true) if current_user.allow_male?
     @people = @people.where(gender: 'female', "allow_#{current_user.gender}".to_sym => true) if current_user.allow_female?
     @people = @people.where(gender: 'other', "allow_#{current_user.gender}".to_sym => true) if current_user.allow_other?
+    @people = @people.page(@page)
 
-    render json: @people, each_serializer: PersonSerializer, longitude: current_user.longitude, latitude: current_user.latitude
+    render json: @people, meta: get_pagination, each_serializer: PersonSerializer, longitude: current_user.longitude, latitude: current_user.latitude
   end
 
   def show
@@ -29,6 +28,13 @@ class Api::V1::PeopleController < Api::V1::ApplicationController
       @user.longitude = params[:longitude].to_f
       @user.save
     end
+  end
+
+  def get_pagination
+    {
+      total_pages: @people.total_pages,
+      current_page: @page
+    }
   end
 
 end

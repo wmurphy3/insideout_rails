@@ -2,7 +2,7 @@ require "image_uploader"
 
 class User < ApplicationRecord
   include ImageUploader::Attachment.new(:image)
-  
+
   acts_as_paranoid
   reverse_geocoded_by :latitude, :longitude
   devise :database_authenticatable, :registerable,
@@ -10,6 +10,7 @@ class User < ApplicationRecord
 
   has_one :user_profile
   has_many :matches
+  has_many :mobile_tokens
 
   paginates_per 20
 

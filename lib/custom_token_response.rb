@@ -21,9 +21,9 @@ module CustomTokenResponse
       :gender           => user.gender,
       :allow_male       => user.allow_male,
       :allow_female     => user.allow_female,
-      :allow_other      => user.allow_other
+      :allow_other      => user.allow_other,
+      :profile_picture  => user.image_url
     }
-
     # call original `#body` method and merge its result with the additional data hash
     super.merge(additional_data)
   end
