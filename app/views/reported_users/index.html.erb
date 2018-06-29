@@ -1,0 +1,29 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |reported| %>
+      <tr class="<%= user.deleted? ? 'bg-danger' : '' %>">
+        <td><%= reported.user.id %></td>
+        <td><%= reported.user.name %></td>
+        <td><%= reported.user.email %></td>
+        <td>
+          <% unless reported.user.deleted? %>
+            <span>
+              <%= link_to "<i class='fa fa-trash' aria-hidden='true'></i> Delete".html_safe, user_path(user), method: :delete, class: 'btn btn-sm btn-outline-danger', data: {confirm: "Are you sure?"} %>
+            </span>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="apple_pagination mx-auto">
+  <%= paginate @users, :container => false %>
+</div>

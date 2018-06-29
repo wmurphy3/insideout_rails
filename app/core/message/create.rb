@@ -12,6 +12,7 @@ class Message::Create < Rectify::Command
       transform_params
       create_message
       send_push_notification
+      send_pusher
     end
 
     broadcast(:ok, message)
@@ -49,5 +50,14 @@ class Message::Create < Rectify::Command
 
   def send_push_notification
     SendPushNotificationJob.perform_later(token, "A message from #{user.name} is waiting for you") unless token.empty?
+  end
+
+  def send_pusher
+    Pusher.trigger((params[:match_id] || match.id), 'message', {
+      id:       message.id,
+      user_id:  user.id,
+      message:  message.message,
+      match_id: message.match_id
+    })
   end
 end

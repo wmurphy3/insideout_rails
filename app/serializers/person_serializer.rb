@@ -3,7 +3,7 @@ class PersonSerializer < ActiveModel::Serializer
 
   attributes :id, :description, :name, :age, :favorite_movie, :favorite_food, :favorite_song,
     :job_title, :hobbies, :school, :social_media_link, :gender, :allow_other,
-    :snap_chat_name, :profile_picture, :allow_male, :allow_female, :distance
+    :snap_chat_name, :profile_picture, :allow_male, :allow_female, :distance, :matched
 
   def distance
     object.distance_from([instance_options[:latitude], instance_options[:longitude]])
@@ -15,6 +15,10 @@ class PersonSerializer < ActiveModel::Serializer
 
   def profile_picture
     object.image_url
+  end
+
+  def matched
+    Match.matched(object.id, instance_options[:user_id])
   end
 
 end

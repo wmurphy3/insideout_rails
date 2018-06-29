@@ -16,4 +16,5 @@ class User < ApplicationRecord
 
   scope :subscribed, ->() { where(subscribed: 1) }
   scope :not_me, ->(id) { where.not(id: id) }
+
 end

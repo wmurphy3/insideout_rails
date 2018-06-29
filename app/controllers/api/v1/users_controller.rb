@@ -72,6 +72,14 @@ class Api::V1::UsersController < Api::V1::ApplicationController
     end
   end
 
+  def report
+    if ReportedUser.create({user_id: params[:id], reported_reason: params[:reason]})
+      render json: { message: 'User reported' }, status: 200
+    else
+      render json: { errors: 'Could report user' }, status: 422
+    end
+  end
+
   private
 
   def user_profile_params

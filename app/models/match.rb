@@ -26,4 +26,11 @@ class Match < ApplicationRecord
     self.accepter_id == user.id ? self.asker : self.accepter
   end
 
+  def self.matched(user_id, my_id)
+    match = Match.where(accepter_id: user_id, asker_id: my_id).or(Match.where(accepter_id: my_id, asker_id: user_id)).first
+    return false unless match
+
+    match.accepter_next_step && match.asker_next_step
+  end
+
 end

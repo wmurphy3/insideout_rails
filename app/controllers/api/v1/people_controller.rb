@@ -11,12 +11,21 @@ class Api::V1::PeopleController < Api::V1::ApplicationController
     @people = @people.where(gender: 'other', "allow_#{current_user.gender}".to_sym => true) if current_user.allow_other?
     @people = @people.page(@page)
 
-    render json: @people, meta: get_pagination, each_serializer: PersonSerializer, longitude: current_user.longitude, latitude: current_user.latitude
+    render json: @people,
+      meta: get_pagination,
+      each_serializer: PersonSerializer,
+      longitude: current_user.longitude,
+      latitude: current_user.latitude,
+      user_id: current_user.id
   end
 
   def show
     @person = User.find(params[:id])
-    render json: @person, serializer: PersonSerializer, longitude: current_user.longitude, latitude: current_user.latitude
+    render json: @person,
+      serializer: PersonSerializer,
+      longitude: current_user.longitude,
+      latitude: current_user.latitude,
+      user_id: current_user.id
   end
 
   private
