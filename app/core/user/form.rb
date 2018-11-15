@@ -16,6 +16,8 @@ class User::Form < Rectify::Form
   attribute :allow_male,            Boolean
   attribute :allow_female,          Boolean
   attribute :allow_other,           Boolean
+  attribute :token,                 String
+  attribute :card,                  Object
 
   validates :description, :email, :name, :password, :password_confirmation,
     :age, :gender, :presence => true

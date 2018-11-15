@@ -84,3 +84,5 @@ gem 'figaro'
 gem 'exponent-server-sdk'
 gem 'airbrake', '~> 7.3'
 gem 'pusher'
+
+gem 'stripe'
