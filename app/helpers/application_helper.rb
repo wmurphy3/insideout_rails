@@ -13,4 +13,12 @@ module ApplicationHelper
 
     flash_messages.join("\n").html_safe
   end
+
+  def preferences(user)
+    prefs = []
+    prefs << "male" if user.allow_male
+    prefs << "female" if user.allow_female
+    prefs << "other" if user.allow_other
+    prefs
+  end
 end
