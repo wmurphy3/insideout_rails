@@ -17,8 +17,19 @@ class User::Form < Rectify::Form
   attribute :allow_female,          Boolean
   attribute :allow_other,           Boolean
   attribute :token,                 String
-  attribute :card,                  Object
+  attribute :number,                String
+  attribute :cvc,                   String
+  attribute :exp_month,             String
+  attribute :exp_year,              String
+  attribute :address_zip,           String
 
   validates :description, :email, :name, :password, :password_confirmation,
     :age, :gender, :presence => true
+  validate :validate_email
+
+  def validate_email
+    return if User.where(email: email).count == 0
+
+    errors.add(:email, 'is already in use')
+  end
 end

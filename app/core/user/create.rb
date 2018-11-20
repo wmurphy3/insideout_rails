@@ -11,6 +11,7 @@ class User::Create < Rectify::Command
     return broadcast(:invalid, form.errors.messages) if form.invalid?
 
     transaction do
+      transform_card
       transform_params
       create_user_profile
       create_customer
@@ -26,7 +27,17 @@ class User::Create < Rectify::Command
 
   private
 
-  attr_reader :form, :user, :user_profile, :customer, :stripe_card_id
+  attr_reader :form, :user, :user_profile, :customer, :stripe_card_id, :card
+
+  def transform_card
+    @card = {
+      number:       form.number,
+      cvc:          form.cvc,
+      exp_month:    form.exp_month,
+      exp_year:     form.exp_year,
+      address_zip:  form.address_zip
+    }
+  end
 
   def transform_params
     @transformed_params = {
@@ -53,7 +64,7 @@ class User::Create < Rectify::Command
   end
 
   def create_customer
-    @stripe_card_id = CreditCardService.new(@user_profile, form.card).create_credit_card
+    @stripe_card_id = CreditCardService.new(@user_profile, card).create_credit_card
   end
 
   def charge_account

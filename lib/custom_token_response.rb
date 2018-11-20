@@ -13,7 +13,7 @@ module CustomTokenResponse
       :subscribed       => user.subscribed,
       :interests        => user.interests,
       :job_title        => user.job_title,
-      :school           => user.social_media_link,
+      :school           => user.school,
       :gender           => user.gender,
       :allow_male       => user.allow_male,
       :allow_female     => user.allow_female,

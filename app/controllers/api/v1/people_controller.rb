@@ -1,4 +1,5 @@
 class Api::V1::PeopleController < Api::V1::ApplicationController
+  include ApplicationHelper
   before_action :save_spot, only: [:index]
 
   def index
