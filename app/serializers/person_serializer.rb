@@ -6,11 +6,11 @@ class PersonSerializer < ActiveModel::Serializer
     :profile_picture, :allow_male, :allow_female, :distance, :matched
 
   def distance
-    object.distance_from([instance_options[:latitude], instance_options[:longitude]])
+    object.distance_from([instance_options[:latitude], instance_options[:longitude]]).to_i
   end
 
   def gender
-    object.gender.first
+    object.gender.titleize
   end
 
   def profile_picture
