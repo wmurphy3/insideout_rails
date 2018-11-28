@@ -14,6 +14,8 @@ class User < ApplicationRecord
 
   paginates_per 20
 
+  serialize :interests, JSON
+
   scope :subscribed, ->() { where(subscribed: 1) }
   scope :not_me, ->(id) { where.not(id: id) }
 
