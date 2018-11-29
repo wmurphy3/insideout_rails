@@ -38,8 +38,8 @@ class Match::Create < Rectify::Command
 
   def transform_params
     @transformed_params = {
-      asker_id:              user.id,
-      accepter_id:           form.accepter_id,
+      asker_id:      user.id,
+      accepter_id:   form.accepter_id,
     }
   end
 

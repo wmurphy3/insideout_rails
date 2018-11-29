@@ -18,7 +18,7 @@ class Api::V1::MatchesController < Api::V1::ApplicationController
     Match::Create.call(@form, current_user) do
       on(:ok) do |match|
         render({
-          :json       => {message:'matched'},
+          :json       => {match_id: match.id},
           :status     => :created,
         })
       end
