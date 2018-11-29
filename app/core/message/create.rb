@@ -28,13 +28,6 @@ class Message::Create < Rectify::Command
     @token = MobileToken.where(user_id: params[:user_id]).pluck(:token)
   end
 
-  def find_or_create_match
-    unless params[:match_id]
-      @match = Match.create(asker_id: user.id, accepter_id: params[:user_id])
-      SendPushNotificationJob.perform_later(token, "You have recieved your first message from #{user.name}") unless token.empty?
-    end
-  end
-
   def transform_params
     @transformed_params = {
       user_id:       user.id,

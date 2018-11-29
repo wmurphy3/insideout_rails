@@ -2,7 +2,6 @@ class Match::Create < Rectify::Command
 
   def initialize(form, user)
     @form = form
-    puts "@form: #{form.inspect}"
     @user = user
   end
 
@@ -17,6 +16,8 @@ class Match::Create < Rectify::Command
       else
         transform_params
         create_match
+        find_receiver
+        send_push_notification
       end
     end
 
@@ -25,7 +26,7 @@ class Match::Create < Rectify::Command
 
   private
 
-  attr_reader :form, :user, :match
+  attr_reader :form, :user, :match, :token
 
   def find_match
     @match = Match.where(asker_id: form.accepter_id, accepter_id: user.id).first
@@ -39,12 +40,20 @@ class Match::Create < Rectify::Command
   def transform_params
     @transformed_params = {
       asker_id:      user.id,
-      accepter_id:   form.accepter_id,
+      accepter_id:   form.accepter_id
     }
   end
 
   def create_match
     @match = Match.new(@transformed_params)
     @match.save
+  end
+
+  def find_receiver
+    @token = MobileToken.where(user_id: form.accepter_id).pluck(:token)
+  end
+
+  def send_push_notification
+    SendPushNotificationJob.perform_later(token, "You have been connected with #{user.name}")
   end
 end
