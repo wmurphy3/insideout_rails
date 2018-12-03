@@ -43,10 +43,7 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 
   def save_image
     @user = User.find(current_user.id)
-    Thread.current[:current_user] = @user
-
     @user.image = params[:image]
-
     if @user.save
       render({
         :json       => @user,

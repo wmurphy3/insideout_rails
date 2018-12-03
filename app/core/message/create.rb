@@ -8,7 +8,6 @@ class Message::Create < Rectify::Command
   def call
     transaction do
       find_receiver
-      find_or_create_match
       transform_params
       create_message
       send_push_notification
@@ -31,7 +30,7 @@ class Message::Create < Rectify::Command
   def transform_params
     @transformed_params = {
       user_id:       user.id,
-      match_id:      (params[:match_id] || match.id),
+      match_id:      params[:match_id],
       message:       params[:message]
     }
   end
