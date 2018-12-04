@@ -20,6 +20,7 @@ class Api::V1::MatchesController < Api::V1::ApplicationController
         render({
           json:       match,
           serializer: MatchSerializer,
+          user_id:    current_user.id,
           :status     => :created,
         })
       end
