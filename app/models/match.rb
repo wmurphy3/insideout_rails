@@ -30,7 +30,7 @@ class Match < ApplicationRecord
     match = Match.where(accepter_id: user_id, asker_id: my_id).or(Match.where(accepter_id: my_id, asker_id: user_id)).first
     return false unless match
 
-    match.accepter_next_step && match.asker_next_step
+    match.created_at < 1.day.ago
   end
 
 end
