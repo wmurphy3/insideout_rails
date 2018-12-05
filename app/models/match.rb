@@ -33,4 +33,8 @@ class Match < ApplicationRecord
     match.created_at < 1.day.ago
   end
 
+  def user_id(u_id)
+    asker_id == u_id ? accepter_id : asker_id
+  end
+
 end
