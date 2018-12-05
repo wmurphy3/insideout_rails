@@ -7,6 +7,7 @@ class Message::Create < Rectify::Command
 
   def call
     transaction do
+      find_match
       find_receiver
       transform_params
       create_message
@@ -21,10 +22,14 @@ class Message::Create < Rectify::Command
 
   private
 
-  attr_reader :params, :user, :message, :match, :token
+  attr_reader :params, :user, :message, :match, :token, :user_id
+
+  def find_match
+    @match = Match.find(params[:match_id])
+  end
 
   def find_receiver
-    @token = MobileToken.where(user_id: params[:user_id]).pluck(:token)
+    @token = MobileToken.where(user_id: match.user_id(user.id)).pluck(:token)
   end
 
   def transform_params
