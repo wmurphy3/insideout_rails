@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181114045847) do
+ActiveRecord::Schema.define(version: 20181211165312) do
 
   create_table "matches", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "asker_id"
@@ -23,10 +23,10 @@ ActiveRecord::Schema.define(version: 20181114045847) do
     t.index ["deleted_at"], name: "index_matches_on_deleted_at"
   end
 
-  create_table "messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "messages", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin" do |t|
     t.integer "user_id"
     t.integer "match_id", null: false
-    t.text "message", null: false
+    t.text "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
