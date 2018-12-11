@@ -3,15 +3,13 @@ class Api::V1::PeopleController < Api::V1::ApplicationController
   before_action :save_spot, only: [:index]
 
   def index
-    @people = User.joins("LEFT JOIN matches ON users.id = matches.asker_id OR users.id = matches.accepter_id").where({
-      matches: {
-        asker_id: nil,
-        accepter_id: nil
-      },
+    # TODO this needs to be fixed
+    @people = User.where({
       gender: preferences(current_user),
-      "allow_#{current_user.gender}".to_sym => true
-    })
-    @people = @people.page(@page)
+      "allow_#{current_user.gender}".to_sym => true,
+    }).where.not(id: Match.where(accepter_id: current_user.id).select(:asker_id))
+      .where.not(id: Match.where(asker_id: current_user.id).select(:accepter_id))
+      .page(@page)
 
     render json: @people,
       meta:             get_pagination,
