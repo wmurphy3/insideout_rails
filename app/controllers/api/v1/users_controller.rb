@@ -25,7 +25,7 @@ class Api::V1::UsersController < Api::V1::ApplicationController
 
   def update
     @user_profile = User.find(params[:id])
-    @form = User::Form.from_params(user_profile_params)
+    @form = User::UpdateForm.from_params(user_profile_params).with_context(user: @user_profile || {})
 
     User::Update.call(@form, @user_profile, current_user) do
       on(:ok) do |user_profile|
