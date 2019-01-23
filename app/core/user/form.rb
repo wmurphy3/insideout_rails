@@ -16,11 +16,6 @@ class User::Form < Rectify::Form
   attribute :allow_male,            Boolean
   attribute :allow_female,          Boolean
   attribute :allow_other,           Boolean
-  attribute :token,                 String
-  attribute :number,                String
-  attribute :cvc,                   String
-  attribute :exp_month,             String
-  attribute :exp_year,              String
   attribute :address_zip,           String
 
   validates :description, :email, :name, :password, :password_confirmation,
